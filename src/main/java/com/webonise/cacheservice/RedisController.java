@@ -37,10 +37,11 @@ public class RedisController {
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String saveInRedis(@RequestParam("key") String key, @RequestParam("value") String value, Model model) {
-        logger.info("KEY: {}, VALUE: {}", key, value);
-        if ( !key.isEmpty() && !value.isEmpty() ) {
+    public String saveInRedis(@RequestParam("key") String key, @RequestParam("value") String value, @RequestParam("email") String email, Model model) {
+        logger.info("KEY: {}, VALUE: {}, EMAIL: {}", key, value, email);
+        if ( !key.isEmpty() ) {
             User user = new User(key, value);
+            user.setEmail(email);
             redisService.saveUser(user);
         }
         return "home";

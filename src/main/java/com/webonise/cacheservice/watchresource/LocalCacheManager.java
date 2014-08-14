@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import com.webonise.cacheservice.CacheServiceUtils;
 import com.webonise.cacheservice.RedisService;
+import com.webonise.cacheservice.cache.EntriesCacheProcessor;
+import com.webonise.cacheservice.cache.ResultsCacheProcessor;
 import com.webonise.redis.model.User;
 
 @Component
@@ -33,7 +35,26 @@ public class LocalCacheManager {
 
     @Autowired
     private RedisService redisService;
-
+    
+    @Autowired
+    private EntriesCacheProcessor entriesCacheProcessor;
+    
+    @Autowired
+    private ResultsCacheProcessor resultsCacheProcessor;
+    
+    @PostConstruct
+    public void build() {
+        // Start populating data in Redis in a separate thread.
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+//                entriesCacheProcessor.buildCache();
+//                resultsCacheProcessor.buildCache();
+            }
+        };
+        new Thread(runnable).start();
+    }
+    
     @PostConstruct
     public void registerServiceWatch() {
         final ResourceWatcher watchService = new ResourceWatcher(basePath);

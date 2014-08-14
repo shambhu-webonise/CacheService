@@ -1,15 +1,25 @@
 package com.webonise.redis.model;
 
-import java.io.Serializable;
 
-public class User implements Serializable {
+import drf.common.wrappers.cache.Cachable;
+
+public class User implements Cachable {
 
     private static final long serialVersionUID = -7898194272883238670L;
     private static final String OBJECT_KEY = "USER";
     
     private String id;
     private String name;
+    private String email;
     
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public User() {
         super();
     }
@@ -37,16 +47,16 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
     public String getKey() {
         return getId();
     }
     public String getObjectKey() {
         return OBJECT_KEY;
     }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + "]";
+        return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
     }
-    
-    
 }

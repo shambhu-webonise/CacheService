@@ -48,12 +48,10 @@ public class ResourceWatcher {
     }
     
     public void processEvents() {
-        LOG.info("Process Events -- ");
         while ( true ) {
             WatchKey key;
             try {
                 key = watcher.take();
-                LOG.debug("Process on Key -- {} ", key.toString());
             } catch (InterruptedException x) {
                 return;
             }
